@@ -36,13 +36,13 @@ cryphoctl lock NAME
 
 ## cryphotab
 
-The format of `cryphotab` is simple:
-
+The format of `cryphotab` is simple (see also example file)
 ```
 duidofdisk.X cryphoid [boot]
 ```
+where `X` is the `disklabel(8)` partition.
+About the `boot` option, see below.
 Lines beginning with `#` are ignored.
-Check the example file.
 
 ## fstab annotations
 
@@ -63,7 +63,7 @@ Add something like the following line to your `rc.local(8)` to call it:
 [ -f /etc/rc.crypho.up ] && . /etc/rc.crypho.up
 ```
 * Note that a corresponding `rc.crypho.down` is not really needed
-because `shutdown` is gentle enough, so you don't need to place
+because `shutdown(8)` is gentle enough, so you don't need to place
 something similar to `rc.shutdown(8)`.  In case you need one,
 it should be straightforward to create it.
 
