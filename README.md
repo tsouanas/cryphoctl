@@ -4,7 +4,7 @@ control OpenBSD's crypto partitions
 
 ## About
 
-This is essentially a wrapper for `bioctl(8)` and (u)mount
+This is essentially a wrapper for `bioctl(8)` and `[u]mount(8)`
 for the typical use case, where by "typical" I mean "my typical".
 First you need to create a `cryphotab` (example provided),
 to give a name (cryphoid) to each partition that has a
