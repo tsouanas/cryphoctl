@@ -56,7 +56,7 @@ See the example files provided.
 Included are some files meant to help with `cryphoctl` commands
 to be run during boot, via `rc(8)`:
 
-* `/etc/rc.crypho` : main functionality lib
+* `/etc/rc.crypho`: main functionality lib
 * `/etc/rc.crypho.up`: first unlocks boot-marked partitions of `cryphotab`.
 Add something like the following line to your `rc.local(8)` to call it:
 ```
