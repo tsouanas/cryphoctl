@@ -1,0 +1,29 @@
+CRYPHOTAB="/etc/cryphotab"
+CRYPHOCTL="/path/to/cryphoctl"
+
+cryphoboots=`grep -v ' *#' $CRYPHOTAB | awk '$3 == "boot" { print $2; }'`
+
+unlock_and_mount_crypho()
+{
+    for c in $cryphoboots; do
+        $CRYPHOCTL unlock $c
+    done
+}
+
+umount_and_lock_crypho()
+{
+    # might need to reverse the order
+    for c in $cryphoboots; do
+        $CRYPHOCTL lock $c
+    done
+}
+
+crypho_up()
+{
+    unlock_and_mount_crypho
+}
+
+crypho_down()
+{
+    umount_and_lock_crypho
+}

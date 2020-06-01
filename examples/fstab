@@ -1,0 +1,7 @@
+8888888855555555.a /home/n         ffs fstab,options,here 0 0    #C:perso
+swap               /home/n/.cache  mfs fstab,options,here 0 0    #C:perso
+8888888855555555.d /misc           ffs fstab,options,here 0 0    #C:perso
+8888888855555555.k /docs           ffs fstab,options,here 0 0    #C:perso
+8888888844444444.a /group          ffs fstab,options,here 0 0    #C:blah
+8888888866666666.a /tsoudia        ffs fstab,options,here 0 0    #C:bloo
+8888888877777777.a /var/postgresql ffs fstab,options,here 0 0    #C:deebee

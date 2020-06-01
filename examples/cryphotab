@@ -1,0 +1,9 @@
+# example cryphotab file
+# (lines beginning with # are ignored)
+# 1st field: partition of type RAID CRYPTO
+# 2nd field: cryphoid (name for cryphoctl)
+# 3rd field: options: 'boot' is the only option for now (see rc.crypho)
+0000000000000000.o perso  boot
+0000000011111111.a blah   boot
+0000000000000000.p bloo
+0000000022222222.k deebee boot

@@ -1,0 +1,3 @@
+[ -f /etc/rc.crypho ] && . /etc/rc.crypho
+
+crypho_up
