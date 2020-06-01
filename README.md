@@ -39,7 +39,7 @@ cryphoctl lock NAME
 The format of `cryphotab` is simple:
 
 ```
-duidofdisk.X name [boot]
+duidofdisk.X cryphoid [boot]
 ```
 Lines beginning with `#` are ignored.
 Check the example file.
@@ -57,7 +57,7 @@ Included are some files meant to help with `cryphoctl` commands
 to be run during boot, via `rc(8)`:
 
 * `/etc/rc.crypho`: main functionality lib
-* `/etc/rc.crypho.up`: first unlocks boot-marked partitions of `cryphotab`.
+* `/etc/rc.crypho.up`: unlocks _boot_-marked partitions of `cryphotab`.
 Add something like the following line to your `rc.local(8)` to call it:
 ```
 [ -f /etc/rc.crypho.up ] && . /etc/rc.crypho.up
