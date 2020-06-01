@@ -19,7 +19,7 @@ with special comments (see below).
 
 ## Usage
 
-To see a list of all known names of CRYPTO partitions:
+To see a list of all known names (cryphoids) of CRYPTO partitions:
 ```
 cryphoctl list
 ```
