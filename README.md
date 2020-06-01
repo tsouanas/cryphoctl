@@ -1,6 +1,6 @@
 # cryphoctl
 
-control OpenBSD's crypto partitions
+Wrapper around bioctl(8) to control OpenBSD's crypto partitions.
 
 ## About
 
