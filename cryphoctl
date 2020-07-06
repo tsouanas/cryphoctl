@@ -4,9 +4,7 @@ CRYPHOTAB=/etc/cryphotab
 SRDEV=softraid0
 
 command=$1
-shift
-cryphoid=$1
-shift
+cryphoid=$2
 
 ####  lib  #####################################################
 
