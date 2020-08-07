@@ -17,47 +17,48 @@ usage()
 
 check_bioctl()
 {
-    bioctl $SRDEV > /dev/null || exit 3
+    bioctl "$SRDEV" > /dev/null || exit 3
 }
 
 cryphoid2duidletter()
 {
-    grep -v '^ *#' $CRYPHOTAB | awk "\$2 == \"$1\" { print \$1 }" | tail -1
+    grep -v '^ *#' "$CRYPHOTAB" | awk "\$2 == \"$1\" { print \$1 }" | tail -1
 }
 
 duid2dev()
 {
-    dev=`disklabel $1 | head -1 | sed 's|.*/dev/r\(sd[0-9]*\).*|\1|'`
-    if [ "X$dev" == X"" ]; then
+    dev=$(disklabel "$1" | head -1 | sed 's|.*/dev/r\(sd[0-9]*\).*|\1|')
+    if [ "X$dev" = X"" ]; then
         echo "Error: could not map duid ($1) to a dev."
         exit 4
     fi
-    echo $dev
+    echo "$dev"
 }
 
 duidletter2devletter()
 {
-    duid=`echo $1 | cut -f1 -d.`
-    letter=`echo $1 | cut -f2 -d.`
-    dev=`duid2dev $duid`
+    duid=$(echo "$1" | cut -f1 -d.)
+    letter=$(echo "$1" | cut -f2 -d.)
+    dev=$(duid2dev "$duid")
     echo "${dev}${letter}"
 }
 
 devletter2motherdev()
 {
-    bioctl $SRDEV | grep -B1 $1 | head -1 | awk '{ print $5 }'
+    bioctl "$SRDEV" | grep -B1 "$1" | head -1 | awk '{ print $5 }'
 }
 
 check_cryphotab()
 {
     # TODO
+    true
 }
 
 
 ####  main  ####################################################
 
 # check cryphotab
-if [ ! -r $CRYPHOTAB ]; then
+if [ ! -r "$CRYPHOTAB" ]; then
     echo "Cannot read cryphotab $CRYPHOTAB."
     exit 1
 else
@@ -70,31 +71,31 @@ case $command in
 
         check_bioctl
 
-        duidletter=`cryphoid2duidletter $cryphoid`
+        duidletter=$(cryphoid2duidletter "$cryphoid")
         # XXX: check should be done elsewhere, dup with below
-        if [ "X$duidletter" == X"" ]; then
+        if [ "X$duidletter" = X"" ]; then
             echo "Error: Could not map cryphoid ($cryphoid) to a duidletter.  Check your cryphotab."
             exit 4
         fi
 
-        devletter=`duidletter2devletter $duidletter`
+        devletter=$(duidletter2devletter "$duidletter")
 
         # check if devletter is unlocked
-        motherdev=`devletter2motherdev $devletter`
+        motherdev=$(devletter2motherdev "$devletter")
         if [ "X$motherdev" != X"" ]; then
             echo "Error: Trying to unlock devletter ($devletter) which is already unlocked ($motherdev).  Look:"
-            bioctl $SRDEV
+            bioctl "$SRDEV"
             exit 4
         fi
 
         # everything seems OK, so keep asking for passphrase
         while true; do
-            echo -n "$cryphoid "
-            bioctl -c C -l $devletter $SRDEV && break
+            printf "%s " "$cryphoid"
+            bioctl -c C -l "$devletter" "$SRDEV" && break
             sleep 0.5
         done
 
-        if [ $? == 0 ]; then
+        if [ $? -eq 0 ]; then
             awkenv="-v mountpoint=2 -v fstype=3"
             # fsck and mount ffs automountpoints
             grep "#.*C:$cryphoid" /etc/fstab | awk $awkenv "\$fstype == \"ffs\" { print \"fsck -p \" \$mountpoint \" && mount \" \$mountpoint; }" | sh
@@ -111,18 +112,18 @@ case $command in
 
         check_bioctl
 
-        duidletter=`cryphoid2duidletter $cryphoid`
+        duidletter=$(cryphoid2duidletter "$cryphoid")
         # XXX: check should be done in cryphoid2duidletter, dup with above
-        if [ "X$duidletter" == X"" ]; then
+        if [ "X$duidletter" = X"" ]; then
             echo "Error: Could not map cryphoid ($cryphoid) to a duidletter.  Check your cryphotab."
             exit 4
         fi
 
-        devletter=`duidletter2devletter $duidletter`
+        devletter=$(duidletter2devletter "$duidletter")
 
         # check if devletter is locked
-        motherdev=`devletter2motherdev $devletter`
-        if [ "X$motherdev" == X"" ]; then
+        motherdev=$(devletter2motherdev "$devletter")
+        if [ "X$motherdev" = X"" ]; then
             echo "Error: Could not map devletter ($devletter) to a motherdev."
             echo "       Are you trying to lock something that is not unlocked?"
             exit 4
@@ -132,12 +133,12 @@ case $command in
         grep "#.*C:$cryphoid" /etc/fstab | tail -r | sed 's@.* \(/[^ ]*\).*@umount \1@' | sh
 
         # everything seems OK, detach cryptodisk
-        bioctl -d $motherdev
+        bioctl -d "$motherdev"
 
         ;;
 
     list)
-        grep -v '^ *#' $CRYPHOTAB | awk '{ print $2 }'
+        grep -v '^ *#' "$CRYPHOTAB" | awk '{ print $2 }'
         ;;
 
     *)
