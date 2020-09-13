@@ -73,7 +73,7 @@ case $command in
 
         duidletter=$(cryphoid2duidletter "$cryphoid")
         # XXX: check should be done elsewhere, dup with below
-        if [ "X$duidletter" = X"" ]; then
+        if [ X"$duidletter" = X"" ]; then
             echo "Error: Could not map cryphoid ($cryphoid) to a duidletter.  Check your cryphotab."
             exit 4
         fi
@@ -82,7 +82,7 @@ case $command in
 
         # check if devletter is unlocked
         motherdev=$(devletter2motherdev "$devletter")
-        if [ "X$motherdev" != X"" ]; then
+        if [ X"$motherdev" != X"" ]; then
             echo "Error: Trying to unlock devletter ($devletter) which is already unlocked ($motherdev).  Look:"
             bioctl "$SRDEV"
             exit 4
@@ -114,7 +114,7 @@ case $command in
 
         duidletter=$(cryphoid2duidletter "$cryphoid")
         # XXX: check should be done in cryphoid2duidletter, dup with above
-        if [ "X$duidletter" = X"" ]; then
+        if [ X"$duidletter" = X"" ]; then
             echo "Error: Could not map cryphoid ($cryphoid) to a duidletter.  Check your cryphotab."
             exit 4
         fi
@@ -123,7 +123,7 @@ case $command in
 
         # check if devletter is locked
         motherdev=$(devletter2motherdev "$devletter")
-        if [ "X$motherdev" = X"" ]; then
+        if [ X"$motherdev" = X"" ]; then
             echo "Error: Could not map devletter ($devletter) to a motherdev."
             echo "       Are you trying to lock something that is not unlocked?"
             exit 4
@@ -138,10 +138,13 @@ case $command in
         ;;
 
     list)
+
         grep -v '^ *#' "$CRYPHOTAB" | awk '{ print $2 }'
+
         ;;
 
     *)
+
         usage
         exit 1
 
