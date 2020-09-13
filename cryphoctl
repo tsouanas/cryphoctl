@@ -71,6 +71,12 @@ case $command in
 
         check_bioctl
 
+        # XXX: check should be done elsewhere, dup with below
+        if [ X"$cryphoid" = X"" ]; then
+            usage
+            exit 1
+        fi
+
         duidletter=$(cryphoid2duidletter "$cryphoid")
         # XXX: check should be done elsewhere, dup with below
         if [ X"$duidletter" = X"" ]; then
@@ -111,6 +117,12 @@ case $command in
     lock)
 
         check_bioctl
+
+        # XXX: check should be done elsewhere, dup with below
+        if [ X"$cryphoid" = X"" ]; then
+            usage
+            exit 1
+        fi
 
         duidletter=$(cryphoid2duidletter "$cryphoid")
         # XXX: check should be done in cryphoid2duidletter, dup with above
